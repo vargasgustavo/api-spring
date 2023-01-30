@@ -10,7 +10,7 @@ public class ProdutoLocalizar {
 		ProdutoDAO dao = new ProdutoDAO();
 		Produto p = dao.localizar(1);
 		if (p!=null) {
-			System.out.println(p.toString());
+			System.out.println(p);
 		}
 		else {
 			System.out.println("Produto não encontrado!");

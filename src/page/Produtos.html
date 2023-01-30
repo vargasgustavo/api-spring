@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="application/xml" />
+    <title>Produtos</title>
+    <script>
+
+    </script>
+    <style>
+        body {
+            background-color: aliceblue;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin: auto;
+            padding: 10px 0 0 0;
+            font-family: Arial, sans-serify;
+        }
+        .form {
+            display: grid;
+            gap: 1rem;
+            width: fit-content;
+            height: fit-content;
+            max-width: 100vw;
+            grid-template-columns: 1fr 1fr;
+            grid-template-areas:
+            "i1 b1"
+            "i2 b2"
+            "i3 b3"
+            "i4 b4"
+            "i5 i5";
+        }
+        .form > :nth-child(1){
+            grid-area: i1;
+        }
+        .form > :nth-child(2){
+            grid-area: b1;
+        }
+        .form > :nth-child(3){
+            grid-area: i2;
+        }
+        .form > :nth-child(4){
+            grid-area: i3;
+        }
+        .form > :nth-child(5){
+            grid-area: i4;
+        }
+        .form > :nth-child(6){
+            grid-area: b2;
+        }
+        .form > :nth-child(7){
+            grid-area: b3;
+        }
+        .form > :nth-child(8){
+            grid-area: b4;
+        }
+        .form > :nth-child(9){
+            grid-area: i5;
+        }
+        .input-label {
+            display: flex;
+            flex-direction: column;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .table {
+            max-width: 100vw;
+            width: fit-content;
+            height: fit-content;
+            padding: 10px 0 0 0;
+        }
+        .table th,td{
+            padding: 1rem;
+            border: 1px solid gray;
+        }
+
+    </style>
+</head>
+<body>
+<div class="form">
+    <form method="post" th:object="${produto}" action="http://localhost:8080/produto">
+        <div class="input-label">
+            <label>Codigo</label>
+            <input type="text" name="codigo" required>
+        </div>
+        <button>Buscar</button>
+        <div class="input-label">
+            <label>Nome</label>
+            <input type="text" name="nome" required>
+        </div>
+        <div class="input-label">
+            <label>Preço Unitário</label>
+            <input type="text" name="precoUnitario" required>
+        </div>
+        <div class="input-label">
+            <label>Estoque</label>
+            <input type="text" name="quantEstoque" required>
+        </div>
+        <button type="reset">Novo</button>
+        <input value="salvar" type="submit"></input>
+        <button>Excluir</button>
+        <input type="text" name="localizar">
+    </form>
+</div>
+<div class="table">
+    <table>
+        <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Preço Unitário</th>
+            <th>Qtde Estoque</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>kjdfndnf</td>
+            <td>ljdjfhd</td>
+            <td>sjdfoad</td>
+            <td>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="22px" height="22px"
+                     cursor="pointer">
+                    <path fill="#000"
+                          d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/>
+                </svg>
+            </td>
+            <td>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="20px" height="22px"
+                     cursor="pointer">
+                    <path fill="#000"
+                          d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/>
+                </svg>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

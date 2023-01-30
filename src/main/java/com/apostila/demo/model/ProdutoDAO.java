@@ -97,9 +97,8 @@ public class ProdutoDAO {
 				p.setNome(bd.rs.getString(2));
 				p.setPrecoUnitario(bd.rs.getDouble(3));
 				p.setQuantEstoque(bd.rs.getInt(4));
-			}
-			else {
-				p = null;
+			} else {
+				System.out.println("Produto não encontrado!");
 			}
 		}
 		catch(SQLException erro) {
