@@ -1,10 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta http-equiv="Content-Type" content="application/xml" />
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="application/json"/>
     <title>Produtos</title>
     <script>
+        var p = "a"
+        search(p)
 
+        function handleSubmit(e) {
+            e.preventDefault();
+            console.log("Deu certo!")
+            const codigo = document.getElementById("codigo").value
+            const nome = document.getElementById("nome").value
+            const precoUnitario = document.getElementById("precoUnitario").value
+            const quantEstoque = document.getElementById("quantEstoque").value
+            const data = JSON.stringify({
+              codigo:codigo,
+              nome:nome,
+              precoUnitario:precoUnitario,
+              quantEstoque:quantEstoque})
+            var headers = new Headers()
+            headers.append("Content-Type", "application/json")
+            fetch("http://localhost:8080/produto", {method:"POST",
+              mode:"cors",
+              headers:headers,
+              body:data})
+              .then(response => {
+              console.log(response)
+            })
+        }
+        function search(pesquisa) {
+            console.log("Entrou")
+            if (pesquisa=="") pesquisa = "a"
+            var headers = new Headers()
+            headers.append("Content-Type", "application/json")
+            fetch(`http://localhost:8080/produto_localizar/${pesquisa}`, {method:"GET",
+              mode:"cors",
+              headers:headers})
+              .then(response => {
+              return response.json().then((json) => {
+              console.log(json)
+                json.forEach((s) => {
+                   let linha = document.createElement("tr")
+                   let colunaCodigo = document.createElement("td")
+                   let colunaNome = document.createElement("td")
+                   let colunaPrecoUnitario = document.createElement("td")
+                   let colunaQuantEstoque = document.createElement("td")
+                   let colunaCaneta = document.createElement("td")
+                   let colunaLata = document.createElement("td")
+                   colunaCodigo.innerHTML = s.codigo
+                   colunaNome.innerHTML = s.nome
+                   colunaPrecoUnitario.innerHTML = s.precoUnitario
+                   colunaQuantEstoque.innerHTML = s.quantEstoque
+                   linha.appendChild(colunaCodigo)
+                   linha.appendChild(colunaNome)
+                   linha.appendChild(colunaPrecoUnitario)
+                   linha.appendChild(colunaQuantEstoque)
+                   document.querySelector("tbody").appendChild(linha)
+                   })
+                })
+              })
+        }
+        function excluir() {
+        console.log("Qualquer coisa")
+            const codigo = document.getElementById("deletar").value
+            var headers = new Headers()
+            headers.append("Content-Type", "application/json")
+            fetch(`http://localhost:8080/produto_excluir/${codigo}`, {method:"DELETE",
+            mode:"cors",
+            headers:headers})
+            .then(response => {
+            window.location.reload()
+            })
+        }
     </script>
     <style>
         body {
@@ -72,37 +141,40 @@
             height: fit-content;
             padding: 10px 0 0 0;
         }
+        th {
+            background-color: #D3D3D3;
+        }
         .table th,td{
-            padding: 1rem;
+            padding: 0.75rem;
             border: 1px solid gray;
         }
-
     </style>
 </head>
 <body>
 <div class="form">
-    <form method="post" th:object="${produto}" action="http://localhost:8080/produto">
+    <form onsubmit="handleSubmit(event)">
         <div class="input-label">
             <label>Codigo</label>
-            <input type="text" name="codigo" required>
+            <input type="text" name="codigo" id="codigo">
         </div>
         <button>Buscar</button>
         <div class="input-label">
             <label>Nome</label>
-            <input type="text" name="nome" required>
+            <input type="text" name="nome" id="nome">
         </div>
         <div class="input-label">
             <label>Preço Unitário</label>
-            <input type="text" name="precoUnitario" required>
+            <input type="text" name="precoUnitario" id="precoUnitario">
         </div>
         <div class="input-label">
             <label>Estoque</label>
-            <input type="text" name="quantEstoque" required>
+            <input type="text" name="quantEstoque" id="quantEstoque">
         </div>
-        <button type="reset">Novo</button>
-        <input value="salvar" type="submit"></input>
-        <button>Excluir</button>
+        <button type="reset">Limpar</button>
+        <input value="salvar" type="submit">
         <input type="text" name="localizar">
+        <button type="button" onclick="excluir()">Excluir</button>
+        <input id="deletar" type="number">
     </form>
 </div>
 <div class="table">
@@ -116,26 +188,6 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>1</td>
-            <td>kjdfndnf</td>
-            <td>ljdjfhd</td>
-            <td>sjdfoad</td>
-            <td>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="22px" height="22px"
-                     cursor="pointer">
-                    <path fill="#000"
-                          d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/>
-                </svg>
-            </td>
-            <td>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="20px" height="22px"
-                     cursor="pointer">
-                    <path fill="#000"
-                          d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/>
-                </svg>
-            </td>
-        </tr>
         </tbody>
     </table>
 </div>
