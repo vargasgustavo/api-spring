@@ -27,6 +27,10 @@
               console.log(response)
             })
         }
+        function buttonSearch() {
+
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             const input = document.getElementById("pesquisar")
             input.addEventListener("input", function() {
@@ -36,7 +40,6 @@
 
         function search(pesquisa) {
             console.log("Entrou")
-            if (pesquisa=="") pesquisa = ""
             var headers = new Headers()
             headers.append("Content-Type", "application/json")
             fetch(`http://localhost:8080/produto_localizar?p=${pesquisa}`, {method:"GET",
@@ -104,7 +107,7 @@
             "i2 b2"
             "i3 b3"
             "i4 b4"
-            "i5 i5";
+            "i5 i6";
         }
         .form > :nth-child(1){
             grid-area: i1;
@@ -132,6 +135,9 @@
         }
         .form > :nth-child(9){
             grid-area: i5;
+        }
+        .form > :nth-child(10){
+            grid-area: i6;
         }
         .input-label {
             display: flex;
@@ -178,7 +184,7 @@
         </div>
         <button type="reset">Limpar</button>
         <input value="salvar" type="submit">
-        <input type="text" id="pesquisar" placeholder="Localizar">
+        <input type="text" id="pesquisar" placeholder="Localizar pelo nome">
         <button type="button" onclick="excluir()">Excluir</button>
         <input id="deletar" type="number">
     </form>
