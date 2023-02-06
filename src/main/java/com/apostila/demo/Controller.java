@@ -24,8 +24,8 @@ public class Controller {
     }
 
     @CrossOrigin(origins = "*", methods = RequestMethod.GET)
-    @GetMapping("/produto_localizar/{nome}")
-    public List<Produto> Search(@PathVariable(value = "nome") String p) {
+    @GetMapping("/produto_localizar")
+    public List<Produto> Search(@RequestParam String p) {
         System.out.println(p);
         ProdutoDAO dao = new ProdutoDAO();
         List<Produto> produto = dao.localizar(p);

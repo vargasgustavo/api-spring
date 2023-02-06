@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="application/json"/>
-    <title>Produtos</title>
     <script>
-        var p = "a"
+        var p = ""
         search(p)
 
         function handleSubmit(e) {
@@ -30,25 +27,31 @@
               console.log(response)
             })
         }
+        document.addEventListener("DOMContentLoaded", () => {
+            const input = document.getElementById("pesquisar")
+            input.addEventListener("input", function() {
+                search(input.value)
+            })
+        })
+
         function search(pesquisa) {
             console.log("Entrou")
-            if (pesquisa=="") pesquisa = "a"
+            if (pesquisa=="") pesquisa = ""
             var headers = new Headers()
             headers.append("Content-Type", "application/json")
-            fetch(`http://localhost:8080/produto_localizar/${pesquisa}`, {method:"GET",
+            fetch(`http://localhost:8080/produto_localizar?p=${pesquisa}`, {method:"GET",
               mode:"cors",
               headers:headers})
               .then(response => {
               return response.json().then((json) => {
               console.log(json)
+              document.querySelector("tbody").innerHTML=""
                 json.forEach((s) => {
                    let linha = document.createElement("tr")
                    let colunaCodigo = document.createElement("td")
                    let colunaNome = document.createElement("td")
                    let colunaPrecoUnitario = document.createElement("td")
                    let colunaQuantEstoque = document.createElement("td")
-                   let colunaCaneta = document.createElement("td")
-                   let colunaLata = document.createElement("td")
                    colunaCodigo.innerHTML = s.codigo
                    colunaNome.innerHTML = s.nome
                    colunaPrecoUnitario.innerHTML = s.precoUnitario
@@ -58,9 +61,9 @@
                    linha.appendChild(colunaPrecoUnitario)
                    linha.appendChild(colunaQuantEstoque)
                    document.querySelector("tbody").appendChild(linha)
-                   })
                 })
               })
+            })
         }
         function excluir() {
         console.log("Qualquer coisa")
@@ -75,6 +78,9 @@
             })
         }
     </script>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="application/json"/>
+    <title>Produtos</title>
     <style>
         body {
             background-color: aliceblue;
@@ -172,7 +178,7 @@
         </div>
         <button type="reset">Limpar</button>
         <input value="salvar" type="submit">
-        <input type="text" name="localizar">
+        <input type="text" id="pesquisar" placeholder="Localizar">
         <button type="button" onclick="excluir()">Excluir</button>
         <input id="deletar" type="number">
     </form>
