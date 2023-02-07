@@ -1,16 +1,3 @@
-//package com.apostila.demo;
-//
-//import org.springframework.boot.SpringApplication;
-//import org.springframework.boot.autoconfigure.SpringBootApplication;
-//
-//@SpringBootApplication
-//public class ApostilaApplication {
-//
-//	public static void main(String[] args) {
-//		SpringApplication.run(ApostilaApplication.class, args);
-//	}
-//
-//}
 package com.apostila.demo;
 import java.sql.*;
 public class BD{
@@ -19,7 +6,8 @@ public class BD{
 	public PreparedStatement st = null;
 	private final String DRIVER = "com.mysql.cj.jdbc.Driver";
 	private final String DATABASENAME = "empresa";
-	private final String URL   = "jdbc:mysql://localhost:3306/"+DATABASENAME+"?useTimezone=true&serverTimezone=UTC";;
+	private final String URL   = "jdbc:mysql://localhost:3306/"
+			+DATABASENAME+"?useTimezone=true&serverTimezone=UTC";;
 	private final String LOGIN = "root";
 	private final String SENHA = "1234";
 
