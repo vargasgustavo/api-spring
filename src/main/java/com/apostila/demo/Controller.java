@@ -34,7 +34,7 @@ public class Controller {
 
     @CrossOrigin(origins = "*", methods = RequestMethod.GET)
     @DeleteMapping("/produto_localizar/{codigo}")
-    public List<Produto> Loacalizar(@PathVariable(value = "codigo") int p) {
+    public String Localizar(@PathVariable(value = "codigo") int p) {
         ProdutoDAO dao = new ProdutoDAO();
         System.out.println(dao.localizar(p));
         return "Produto localizado!";
